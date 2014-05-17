@@ -1,11 +1,13 @@
 package com.example.dreamplay;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayList {
 
-	public PlayList(ArrayList arrayList) {
-		// TODO Auto-generated constructor stub
+	List<String> videos;
+	
+	public PlayList(List<String> list) {
+		videos = list;
 	}
 
 	public PlayList() {
@@ -14,7 +16,7 @@ public class PlayList {
 
 	public long size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return videos.size();
 	}
 
 }
