@@ -3,7 +3,7 @@ package com.example.dreamplay.test;
 import org.junit.Test;
 
 import com.example.dreamplay.R;
-import com.example.dreamplay.YoutubePlayerFactory;
+import com.example.dreamplay.DreamPlayMainActivity;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import android.annotation.TargetApi;
@@ -11,14 +11,14 @@ import android.os.Build;
 import android.test.ActivityInstrumentationTestCase2;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB) 
-public class YoutubePlayerFactoryTest extends
-		ActivityInstrumentationTestCase2<YoutubePlayerFactory> {
+public class DreamPlayMainActivityTest extends
+		ActivityInstrumentationTestCase2<DreamPlayMainActivity> {
 
-	private YoutubePlayerFactory mActivity;
+	private DreamPlayMainActivity mActivity;
 	private YouTubePlayerFragment mYouTubePlayerFragment;
 	
-	public YoutubePlayerFactoryTest() {
-		super(YoutubePlayerFactory.class);
+	public DreamPlayMainActivityTest() {
+		super(DreamPlayMainActivity.class);
 	}
 
 	protected void setUp() throws Exception {
@@ -28,6 +28,7 @@ public class YoutubePlayerFactoryTest extends
 		mActivity = getActivity();
 		mYouTubePlayerFragment =
 		        (YouTubePlayerFragment) mActivity.getFragmentManager().findFragmentById(R.id.youtube_fragment);
+		
 	}
 
 	@Test
@@ -39,7 +40,7 @@ public class YoutubePlayerFactoryTest extends
 	public void testOnCreateBundle() {
 		assertTrue(mYouTubePlayerFragment.isInLayout());
 		assertTrue(mYouTubePlayerFragment.isAdded());
-		assertTrue(mYouTubePlayerFragment.isVisible());		
+		assertTrue(mYouTubePlayerFragment.isVisible());
 	}
 
 }
