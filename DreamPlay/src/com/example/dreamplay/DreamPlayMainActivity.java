@@ -17,6 +17,7 @@ import java.util.concurrent.BlockingQueue;
 public class DreamPlayMainActivity extends YouTubeFailureRecoveryActivity {
 
 	private PlayListProducer mPlayList;
+	private YouTubePlayer mPlayer;
 
 	//-------------------------------------------------------------------------------
 	//    Initialize Activity 
@@ -40,14 +41,16 @@ public class DreamPlayMainActivity extends YouTubeFailureRecoveryActivity {
 		youTubePlayerFragment.initialize(DeveloperKey.DEVELOPER_KEY, this);
 	}
 
+	
 	//-------------------------------------------------------------------------------
-	//    Youtube Player API Callbacks 
+	//    YouTube Player API Callbacks 
 	//-------------------------------------------------------------------------------
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB) @Override
 	public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
 			boolean wasRestored) {
 		if (!wasRestored) {
-			player.loadVideos(mPlayList.popNextUrls());
+			mPlayer = player;
+			mPlayer.loadVideos(mPlayList.popNextUrls());
 		}
 	}
 
