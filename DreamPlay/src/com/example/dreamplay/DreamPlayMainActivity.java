@@ -1,6 +1,7 @@
 package com.example.dreamplay;
 
 import java.util.Arrays;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -16,23 +18,27 @@ import java.util.concurrent.BlockingQueue;
 
 public class DreamPlayMainActivity extends YouTubeFailureRecoveryActivity {
 
-	private PlayListProducer mPlayList;
 	private YouTubePlayer mPlayer;
-
+	private final YouTubePendingVideosQueue mVideosQueue;
+	private final YouTubeVideosProvider mVideosProvider;
+	
+		
 	//-------------------------------------------------------------------------------
 	//    Initialize Activity 
 	//-------------------------------------------------------------------------------
+	
+	public DreamPlayMainActivity() {
+		mVideosQueue = new YouTubePendingVideosQueue();
+		mVideosProvider = new YouTubeVideosProvider(mVideosQueue);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.fragment_main);
 		initializeYouTubePlayerFragment();
-		initializePlayList();
-	}
-
-	private void initializePlayList() {
-		mPlayList = new PlayListProducer(Arrays.asList("QrwdTlVxjj4", "0dTHyp3peqk", "xPgni28Kuc8", "-1uF_J6JAMQ"));
+		
 	}
 
 	private void initializeYouTubePlayerFragment() {
@@ -50,13 +56,21 @@ public class DreamPlayMainActivity extends YouTubeFailureRecoveryActivity {
 			boolean wasRestored) {
 		if (!wasRestored) {
 			mPlayer = player;
-			mPlayer.loadVideos(mPlayList.popNextUrls());
+			try {
+				mPlayer.loadVideos(mVideosQueue.popNextUrls());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	protected YouTubePlayer.Provider getYouTubePlayerProvider() {
 		return (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+	}
+	
+	public YouTubePlayer getYouTubePlayer() {
+		return mPlayer;
 	}
 
 }

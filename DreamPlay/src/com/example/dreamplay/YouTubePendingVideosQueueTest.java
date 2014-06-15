@@ -5,22 +5,32 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 
-public class TestPlayListProducer extends TestCase {
+public class YouTubePendingVideosQueueTest extends TestCase {
 
 	public void testInitialize() {
-	  PlayListProducer playlist = new PlayListProducer(Arrays.asList("a", "b", "c"));
+	  YouTubePendingVideosQueue playlist = new YouTubePendingVideosQueue(Arrays.asList("a", "b", "c"));
 	  assertEquals(playlist.size(), 3); 
 	 }
 	
 	public void testGetVideos() {
-		PlayListProducer playlist = new PlayListProducer(Arrays.asList("a", "b", "c"));
+		YouTubePendingVideosQueue playlist = new YouTubePendingVideosQueue(Arrays.asList("a", "b", "c"));
 	    assertEquals(playlist.size(), 3); 
-	    assertEquals(playlist.popNextVideos().size(), 3); 
+	    try {
+			assertEquals(playlist.popNextUrls().size(), 3);
+		} catch (InterruptedException e) {
+			fail("InterruptedException thrown while attempting to wait for the next urls in the queue " + e.toString());
+			e.printStackTrace();
+		} 
 	}
 	
 	public void testPlayListGetVideos() {
-		PlayListProducer playlist = new PlayListProducer(Arrays.asList("a", "b", "c"));
-		assertEquals(playlist.popNextVideos().get(0).getUrl(), "a"); 
+		YouTubePendingVideosQueue playlist = new YouTubePendingVideosQueue(Arrays.asList("a", "b", "c"));
+		try {
+			assertEquals(playlist.popNextUrls().get(0), "a");
+		} catch (InterruptedException e) {
+			fail("InterruptedException thrown while attempting to wait for the next urls in the queue " + e.toString());
+			e.printStackTrace();
+		} 
 	}
 	
 	

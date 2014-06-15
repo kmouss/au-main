@@ -39,6 +39,19 @@ ActivityInstrumentationTestCase2<DreamPlayMainActivity> {
 		assertTrue(mYouTubePlayerFragment.isInLayout());
 		assertTrue(mYouTubePlayerFragment.isAdded());
 		assertTrue(mYouTubePlayerFragment.isVisible());
+	}m
+	
+	@Test
+	public void testOnInitializationSuccess() {
+		try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+		
+		YouTubePlayer ytPlayer = mActivity.getYouTubePlayer();
+		assertTrue(ytPlayer.hasNext());
+		assertTrue(ytPlayer.isPlaying());	
 	}
 	
 }
