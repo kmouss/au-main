@@ -39,7 +39,7 @@ ActivityInstrumentationTestCase2<DreamPlayMainActivity> {
 		assertTrue(mYouTubePlayerFragment.isInLayout());
 		assertTrue(mYouTubePlayerFragment.isAdded());
 		assertTrue(mYouTubePlayerFragment.isVisible());
-	}m
+	}
 	
 	@Test
 	public void testOnInitializationSuccess() {
